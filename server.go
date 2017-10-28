@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/gorilla/mux"
+	"io"
 	"log"
 	"net/http"
 )
@@ -15,9 +16,9 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		err := decoder.Decode(&req)
 		if err != nil {
 			panic(err)
-		}
+		}*/
 
-		io.WriteString(w, buildResponse(computeOfferId(req.Msisdn)))*/
+	io.WriteString(w, "hello world!")
 }
 
 func main() {
