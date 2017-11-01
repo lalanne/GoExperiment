@@ -21,22 +21,19 @@ func openLogFile(logfile string) {
 }
 
 func genericHandler(w http.ResponseWriter, r *http.Request) {
-	log.Println("generic handler")
-	log.Printf("%s %s %s\n", r.RemoteAddr, r.Method, r.URL)
+	log.Printf("[Generic Handler] [%s] [%s] [%s]\n", r.RemoteAddr, r.Method, r.URL)
 
 	io.WriteString(w, "hello world!")
 }
 
 func purchaseHandler(w http.ResponseWriter, r *http.Request) {
-	log.Println("purchase handler")
-	log.Printf("%s %s %s\n", r.RemoteAddr, r.Method, r.URL)
+	log.Printf("[Purchase Handler] [%s] [%s] [%s]\n", r.RemoteAddr, r.Method, r.URL)
 
 	io.WriteString(w, "hello world!")
 }
 
 func saleHandler(w http.ResponseWriter, r *http.Request) {
-	log.Println("sale handler")
-	log.Printf("%s %s %s\n", r.RemoteAddr, r.Method, r.URL)
+	log.Printf("[Sale Handler] [%s] [%s] [%s]\n", r.RemoteAddr, r.Method, r.URL)
 
 	io.WriteString(w, "hello world!")
 }
