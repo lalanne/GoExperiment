@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"regexp"
 )
 
 func openLogFile(logfile string) {
@@ -35,11 +36,17 @@ func purchaseHandler(w http.ResponseWriter, r *http.Request) {
 func saleHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("[Sale Handler] [%s] [%s] [%s]\n", r.RemoteAddr, r.Method, r.URL)
 
+	s, err := regexp.Compile(`\?(.*)`)
+	if err != nil {
+		log.Fatal("regexp compilation", err)
+	}
+	res := s.FindAllString(r.URL.String(), -1)
+	log.Printf("<%v>\n", res)
+
 	io.WriteString(w, "hello world!")
 }
 
 func main() {
-
 	logFile := "development.log"
 	openLogFile(logFile)
 	log.SetFlags(log.Ldate | log.Ltime | log.Lshortfile)
