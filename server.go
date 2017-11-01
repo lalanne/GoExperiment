@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/gorilla/mux"
 	"io"
 	"log"
@@ -27,7 +26,7 @@ func sale_handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	fmt.Println("vim-go")
+	log.Println("Web service for testing GO")
 
 	router := mux.NewRouter()
 	router.HandleFunc("/", generic_handler).Methods("GET")
