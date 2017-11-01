@@ -21,5 +21,5 @@ func main() {
 	router.HandleFunc("/", handler).Methods("GET")
 
 	/*starts an http server*/
-	http.ListenAndServe(":8000", router)
+	log.Fatal(http.ListenAndServe(":8000", router))
 }
