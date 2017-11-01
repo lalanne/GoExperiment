@@ -20,21 +20,21 @@ func openLogFile(logfile string) {
 	}
 }
 
-func generic_handler(w http.ResponseWriter, r *http.Request) {
+func genericHandler(w http.ResponseWriter, r *http.Request) {
 	log.Println("generic handler")
 	log.Printf("%s %s %s\n", r.RemoteAddr, r.Method, r.URL)
 
 	io.WriteString(w, "hello world!")
 }
 
-func purchase_handler(w http.ResponseWriter, r *http.Request) {
+func purchaseHandler(w http.ResponseWriter, r *http.Request) {
 	log.Println("purchase handler")
 	log.Printf("%s %s %s\n", r.RemoteAddr, r.Method, r.URL)
 
 	io.WriteString(w, "hello world!")
 }
 
-func sale_handler(w http.ResponseWriter, r *http.Request) {
+func saleHandler(w http.ResponseWriter, r *http.Request) {
 	log.Println("sale handler")
 	log.Printf("%s %s %s\n", r.RemoteAddr, r.Method, r.URL)
 
@@ -49,9 +49,9 @@ func main() {
 	log.Println("Web service for testing GO")
 
 	router := mux.NewRouter()
-	router.HandleFunc("/", generic_handler).Methods("GET")
-	router.HandleFunc("/purchase", purchase_handler).Methods("GET")
-	router.HandleFunc("/sale", sale_handler).Methods("GET")
+	router.HandleFunc("/", genericHandler).Methods("GET")
+	router.HandleFunc("/purchase", purchaseHandler).Methods("GET")
+	router.HandleFunc("/sale", saleHandler).Methods("GET")
 
 	/*starts an http server*/
 	log.Fatal(http.ListenAndServe(":8000", router))
