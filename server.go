@@ -1,6 +1,8 @@
 package main
 
 import (
+	"database/sql"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
 	"io"
 	"log"
@@ -29,6 +31,19 @@ func genericHandler(w http.ResponseWriter, r *http.Request) {
 
 func purchaseHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("[Purchase Handler] [%s] [%s] [%s]\n", r.RemoteAddr, r.Method, r.URL)
+
+	db, err := sql.Open("mysql", "user:password@/database")
+	if err != nil {
+		panic(err.Error()) // Just for example purpose. You should use proper error handling instead of panic
+	}
+	defer db.Close()
+
+	// Prepare statement for reading data
+	stmtOut, err := db.Prepare("SELECT squareNumber FROM squarenum WHERE number = ?")
+	if err != nil {
+		panic(err.Error()) // proper error handling instead of panic in your app
+	}
+	defer stmtOut.Close()
 
 	io.WriteString(w, "hello world!")
 }
