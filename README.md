@@ -8,3 +8,19 @@ via SOAP, exploring concurrency and networking in golang.
 
 Also the service uses gorilla web toolkit as the service multiplexer(it is compatible
 with the standard http handler API)
+
+It is necessary to use a database, the easiest way is to use a docker container:
+
+```
+docker run --name MARIADB -e MYSQL_ROOT_PASSWORD=pass -d mariadb:10.3.2
+```
+
+```
+docker exec -it MARIADB bash
+```
+
+inside the container
+
+```
+mysql -u root -ppass
+```
