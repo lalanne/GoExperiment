@@ -39,13 +39,27 @@ func purchaseHandler(w http.ResponseWriter, r *http.Request) {
 	defer db.Close()
 
 	// Prepare statement for reading data
-	stmtOut, err := db.Prepare("select * from OperationsAllowed")
+	rows, err := db.Query("select * from OperationsAllowed")
 	if err != nil {
 		panic(err.Error()) // proper error handling instead of panic in your app
 	}
-	defer stmtOut.Close()
+	defer rows.Close()
 
-	io.WriteString(w, "purchase operation!")
+	var op string
+	for rows.Next() {
+		err := rows.Scan(&op)
+		if err != nil {
+			log.Fatal(op)
+		}
+		if op == "purchase" {
+			io.WriteString(w, "purchase operation allowed by DB!")
+			break
+		} else {
+			io.WriteString(w, "purchase operation NOT allowed by DB!")
+		}
+	}
+	io.WriteString(w, "purchase operation NOT allowed by DB!")
+
 }
 
 func saleHandler(w http.ResponseWriter, r *http.Request) {
