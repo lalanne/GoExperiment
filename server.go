@@ -26,7 +26,7 @@ func openLogFile(logfile string) {
 func genericHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("[Generic Handler] [%s] [%s] [%s]\n", r.RemoteAddr, r.Method, r.URL)
 
-	io.WriteString(w, "hello world!")
+	io.WriteString(w, "default operation!")
 }
 
 func purchaseHandler(w http.ResponseWriter, r *http.Request) {
@@ -45,7 +45,7 @@ func purchaseHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer stmtOut.Close()
 
-	io.WriteString(w, "hello world!")
+	io.WriteString(w, "purchase operation!")
 }
 
 func saleHandler(w http.ResponseWriter, r *http.Request) {
@@ -58,7 +58,7 @@ func saleHandler(w http.ResponseWriter, r *http.Request) {
 	res := s.FindAllString(r.URL.String(), -1)
 	log.Printf("<%v>\n", res)
 
-	io.WriteString(w, "hello world!")
+	io.WriteString(w, "sale operation!")
 }
 
 func main() {
