@@ -32,14 +32,14 @@ func genericHandler(w http.ResponseWriter, r *http.Request) {
 func purchaseHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("[Purchase Handler] [%s] [%s] [%s]\n", r.RemoteAddr, r.Method, r.URL)
 
-	db, err := sql.Open("mysql", "user:password@/database")
+	db, err := sql.Open("mysql", "root:pass@tcp(0.0.0.0:3306)/GOTEST")
 	if err != nil {
 		panic(err.Error()) // Just for example purpose. You should use proper error handling instead of panic
 	}
 	defer db.Close()
 
 	// Prepare statement for reading data
-	stmtOut, err := db.Prepare("SELECT squareNumber FROM squarenum WHERE number = ?")
+	stmtOut, err := db.Prepare("select * from OperationsAllowed")
 	if err != nil {
 		panic(err.Error()) // proper error handling instead of panic in your app
 	}
