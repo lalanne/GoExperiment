@@ -24,3 +24,8 @@ inside the container
 ```
 mysql -u root -ppass
 ```
+
+## Example command for request http to service:
+```
+curl "http://127.0.0.1:8000/purchase?a=5&b=9"
+```
