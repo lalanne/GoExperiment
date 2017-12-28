@@ -34,7 +34,8 @@ func purchaseHandler(w http.ResponseWriter, r *http.Request) {
 
 	db, err := sql.Open("mysql", "root:pass@tcp(0.0.0.0:3306)/GOTEST")
 	if err != nil {
-		// Just for example purpose. You should use proper error handling instead of panic
+		/* Just for example purpose. You should use proper error
+		handling instead of panic*/
 		panic(err.Error())
 	}
 	defer db.Close()
