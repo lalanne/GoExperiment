@@ -9,6 +9,12 @@ via SOAP, exploring concurrency and networking in golang.
 Also the service uses gorilla web toolkit as the service multiplexer(it is compatible
 with the standard http handler API)
 
+For the service to run some packages are needed:
+ * go mysql driver:
+ ```
+ go get -u github.com/go-sql-driver/mysql
+ ```
+
 It is necessary to use a database, the easiest way is to use a docker container:
 
 ```
