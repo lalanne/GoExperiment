@@ -43,7 +43,7 @@ func purchaseHandler(w http.ResponseWriter, r *http.Request) {
 	// Prepare statement for reading data
 	rows, err := db.Query("select * from OperationsAllowed")
 	if err != nil {
-		// proper error handling instead of panic in your app
+		/* proper error handling instead of panic in your app*/
 		panic(err.Error())
 	}
 	defer rows.Close()
