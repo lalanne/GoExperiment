@@ -22,7 +22,7 @@ go get -u github.com/gorilla/mux
 It is necessary to use a database, the easiest way is to use a docker container:
 
 ```
-docker run --name MARIADB -e MYSQL_ROOT_PASSWORD=pass -d mariadb:10.3.2
+docker run --name MARIADB -p 3306:3306 -e MYSQL_ROOT_PASSWORD=pass -d mariadb:10.3.2
 ```
 
 ```
