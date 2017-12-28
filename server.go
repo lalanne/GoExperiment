@@ -79,7 +79,7 @@ func saleHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	logFile := "development.log"
+	logFile := "server_debug.log"
 	openLogFile(logFile)
 	log.SetFlags(log.Ldate | log.Ltime | log.Lshortfile)
 	log.Println("Web service for testing GO")
