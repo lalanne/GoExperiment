@@ -11,13 +11,16 @@ import (
 	"regexp"
 )
 
+func checkErr(err error) {
+	if err != nil {
+		panic(err.Error())
+	}
+}
+
 func openLogFile(logfile string) {
 	if logfile != "" {
 		lf, err := os.OpenFile(logfile, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0640)
-
-		if err != nil {
-			log.Fatal("OpenLogfile: os.OpenFile:", err)
-		}
+		checkErr(err)
 
 		log.SetOutput(lf)
 	}
@@ -33,19 +36,12 @@ func purchaseHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("[Purchase Handler] [%s] [%s] [%s]\n", r.RemoteAddr, r.Method, r.URL)
 
 	db, err := sql.Open("mysql", "root:pass@tcp(0.0.0.0:3306)/GOTEST")
-	if err != nil {
-		/* Just for example purpose. You should use proper error
-		handling instead of panic*/
-		panic(err.Error())
-	}
+	checkErr(err)
 	defer db.Close()
 
 	/*Prepare statement for reading data*/
 	rows, err := db.Query("select * from OperationsAllowed")
-	if err != nil {
-		/* proper error handling instead of panic in your app*/
-		panic(err.Error())
-	}
+	checkErr(err)
 	defer rows.Close()
 
 	for rows.Next() {
@@ -54,9 +50,8 @@ func purchaseHandler(w http.ResponseWriter, r *http.Request) {
 		var host int
 		var op string
 		err := rows.Scan(&id, &error, &host, &op)
-		if err != nil {
-			log.Fatal(op)
-		}
+		checkErr(err)
+
 		if op == "purchase" {
 			io.WriteString(w, "purchase operation allowed by DB!")
 			break
@@ -72,9 +67,8 @@ func saleHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("[Sale Handler] [%s] [%s] [%s]\n", r.RemoteAddr, r.Method, r.URL)
 
 	s, err := regexp.Compile(`\?(.*)`)
-	if err != nil {
-		log.Fatal("regexp compilation", err)
-	}
+	checkErr(err)
+
 	res := s.FindAllString(r.URL.String(), -1)
 	log.Printf("<%v>\n", res)
 
