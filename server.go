@@ -48,9 +48,12 @@ func purchaseHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer rows.Close()
 
-	var op string
 	for rows.Next() {
-		err := rows.Scan(&op)
+		var id string
+		var error int
+		var host int
+		var op string
+		err := rows.Scan(&id, &error, &host, &op)
 		if err != nil {
 			log.Fatal(op)
 		}
