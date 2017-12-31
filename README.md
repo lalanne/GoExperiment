@@ -39,3 +39,10 @@ mysql -u root -ppass
 ```
 curl "http://127.0.0.1:8000/purchase?a=5&b=9"
 ```
+
+## Notes
+Seems that there is no reason to use asynchronous querying of the database, because
+the request are handled by goroutines and this are switched when there is IO blocking 
+involved, so there is no blocking when querying the database, it seems to me that this
+approach is even better than state machine non blocking approach because its easier
+to reason about
