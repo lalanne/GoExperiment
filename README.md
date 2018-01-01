@@ -46,3 +46,5 @@ requests are handled by goroutines and this are switched when there is IO blocki
 involved, so there is no blocking when querying the database, it seems to me that this
 approach is even better than state machine non-blocking approach because its easier
 to reason about
+
+TODO: timers for queries to DB
