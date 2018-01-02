@@ -32,6 +32,11 @@ func genericHandler(w http.ResponseWriter, r *http.Request) {
 	io.WriteString(w, "default operation!")
 }
 
+func getSoapInfo() {
+	log.Printf("[getSoapInfo] \n")
+
+}
+
 func purchaseHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("[Purchase Handler] [%s] [%s] [%s]\n", r.RemoteAddr, r.Method, r.URL)
 
@@ -54,6 +59,7 @@ func purchaseHandler(w http.ResponseWriter, r *http.Request) {
 
 		if op == "purchase" {
 			io.WriteString(w, "purchase operation allowed by DB!")
+			getSoapInfo()
 			break
 		} else {
 			io.WriteString(w, "purchase operation NOT allowed by DB!")
