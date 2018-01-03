@@ -48,3 +48,4 @@ approach is even better than state machine non-blocking approach because its eas
 to reason about
 
 TODO: timers for queries to DB
+TODO: investigate https://github.com/fiorix/wsdl2go to create SOAP client and server
