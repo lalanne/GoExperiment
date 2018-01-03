@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="PROF"
+ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+ xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+ xmlns:ns="http://www.testcom.com/profiler/profiler.wsdl"
+ xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/"
+ xmlns:MIME="http://schemas.xmlsoap.org/wsdl/mime/"
+ xmlns:DIME="http://schemas.xmlsoap.org/ws/2002/04/dime/wsdl/"
+ xmlns:WSDL="http://schemas.xmlsoap.org/wsdl/"
+ xmlns="http://schemas.xmlsoap.org/wsdl/"
+ xmlns:tns="http://www.testcom.com/profiler/profiler.wsdl"
+ xmlns:xsd1="http://www.testcom.com/profiler/schema"
+ targetNamespace="http://www.testcom.com/profiler/profiler.wsdl" >
+
+<types>
+ <schema
+ targetNamespace="http://www.testcom.com/profiler/schema"
+  xmlns="http://www.w3.org/2001/XMLSchema" >
+  <!-- import namespace="http://schemas.xmlsoap.org/soap/encoding/" schemaLocation="http://schemas.xmlsoap.org/soap/encoding/"/ -->
+  <!-- operation request element -->
+
+  <complexType name="returns">
+     <sequence>
+      <element name="Environment"                type="xsd:string"/>
+      <element name="Description"                type="xsd:string"/>
+      <element name="StatusCode"                 type="xsd:string"/>
+      <element name="ResultCode"                 type="xsd:nonNegativeInteger"/>
+     </sequence>
+  </complexType>
+
+  <complexType name="header">
+     <sequence>
+      <element name="ID"      minOccurs="1" maxOccurs="1" type="xsd:string"/>
+     </sequence>
+  </complexType>
+
+  <complexType name="nameValueType">
+	<sequence>
+      <element name="name"      minOccurs="1" maxOccurs="1" type="xsd:string"/>
+      <element name="value"     minOccurs="1" maxOccurs="1" type="xsd:string"/>
+	</sequence>
+  </complexType>
+
+  <complexType name="nameIdType">
+	<sequence>
+      <element name="name"      minOccurs="1" maxOccurs="1" type="xsd:string"/>
+      <element name="id"	minOccurs="1" maxOccurs="1" type="xsd:integer"/>
+	</sequence>
+  </complexType>
+
+  <complexType name="callTypeList">
+     <sequence>
+      <element name="callInfo" minOccurs="1" maxOccurs="unbounded" type="xsd1:nameValueType"/>
+     </sequence>
+  </complexType>
+
+  <complexType name="categoryTypeList">
+     <sequence>
+      <element name="category" minOccurs="1" maxOccurs="unbounded" type="xsd1:nameIdType"/>
+     </sequence>
+  </complexType>
+
+  <element name="Prof-Request">
+    <complexType>
+        <sequence>
+            <element name="header" type="xsd1:header" />
+        </sequence>
+    </complexType>
+  </element>
+
+  <element name="Prof-Response">
+    <complexType>
+        <sequence>
+            <element name="resultado" type="xsd1:returns" minOccurs="1" maxOccurs="1" nillable="false"/>
+        </sequence>
+    </complexType>
+  </element>
+
+ </schema>
+
+</types>
+
+<message name="Prof-Request">
+    <part name="parameters" element="xsd1:Prof-Request"/>
+</message>
+
+<message name="Prof-Response">
+    <part name="parameters" element="xsd1:Prof-Response"/>
+</message>
+
+<portType name="PROFPortType">
+    <operation name="Prof">
+        <documentation>Inicia una transaccion PROF</documentation>
+            <input message="tns:Prof-Request"/>
+        <output message="tns:Prof-Response"/>
+    </operation>
+</portType>
+
+<binding name="PROFSoapBinding" type="tns:PROFPortType">
+    <SOAP:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="Prof">
+        <SOAP:operation soapAction=""/>
+            <input>
+                <SOAP:body parts="parameters" use="literal"/>
+            </input>
+            <output>
+                <SOAP:body parts="parameters" use="literal"/>
+            </output>
+    </operation>
+</binding>
+
+<service name="PROFService">
+    <documentation>Testcom PROF Web Service</documentation>
+    <port name="PROFPort" binding="tns:PROFSoapBinding">
+    <SOAP:address location=""/>
+    </port>
+</service>
+</definitions>
+
