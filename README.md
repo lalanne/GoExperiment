@@ -49,3 +49,4 @@ to reason about
 
  * TODO: timers for queries to DB
  * TODO: investigate https://github.com/fiorix/wsdl2go to create SOAP client and server
+ * TODO: also check https://github.com/hooklift/gowsdl
