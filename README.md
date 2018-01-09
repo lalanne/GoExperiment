@@ -18,6 +18,7 @@ For the service to run some packages are needed:
 ```
 go get -u github.com/gorilla/mux
 ```
+## Database
 
 It is necessary to use a database, the easiest way is to use a docker container:
 
