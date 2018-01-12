@@ -48,7 +48,7 @@ involved, so there is no blocking when querying the database, it seems to me tha
 approach is even better than state machine non-blocking approach because its easier
 to reason about
 
- * TODO: timers for queries to DB
+ * TODO: timers for queries to DB, this should be the next step before SOAP.
  * TODO: investigate https://github.com/fiorix/wsdl2go to create SOAP client and server
 ```
 wsdl2go < test1.wsdl > s.go
