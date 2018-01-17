@@ -49,12 +49,12 @@ approach is even better than state machine non-blocking approach because its eas
 to reason about
 
 ## SOAP options
-#wsdl2go
+# wsdl2go
   * https://github.com/fiorix/wsdl2go to create SOAP client and server
 ```
 wsdl2go < test1.wsdl > s.go
 ```
-#gowsdl
+# gowsdl
  * https://github.com/hooklift/gowsdl
  * with gowsdl both wsdl on the repo compile correctly and go code is generated in 
  both cases
