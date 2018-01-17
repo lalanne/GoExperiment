@@ -65,3 +65,4 @@ both cases
 
 # TODO
  * timers for queries to DB, this should be the next step before SOAP.
+ * change this to do for the issues in GITLAB
