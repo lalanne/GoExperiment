@@ -55,3 +55,5 @@ wsdl2go < test1.wsdl > s.go
 ```
 
  * TODO: also check https://github.com/hooklift/gowsdl
+ * with gowsdl both wsdl on the repo compile correctly and go code is generated in 
+ both cases
