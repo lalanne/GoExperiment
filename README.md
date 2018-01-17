@@ -48,15 +48,19 @@ involved, so there is no blocking when querying the database, it seems to me tha
 approach is even better than state machine non-blocking approach because its easier
 to reason about
 
-## SOAP options
-# wsdl2go
-  * https://github.com/fiorix/wsdl2go to create SOAP client and server
+# SOAP options
+## wsdl2go
+  * https://github.com/fiorix/wsdl2go 
+To create SOAP client and server
 ```
 wsdl2go < test1.wsdl > s.go
 ```
-# gowsdl
+with ```wsdl2go``` test.wsdl does not work only test1.wsdl
+
+## gowsdl
  * https://github.com/hooklift/gowsdl
- * with gowsdl both wsdl on the repo compile correctly and go code is generated in 
- both cases
+
+With gowsdl both wsdl on the repo compile correctly and go code is generated in 
+both cases
 
  * TODO: timers for queries to DB, this should be the next step before SOAP.
