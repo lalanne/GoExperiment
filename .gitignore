@@ -3,4 +3,5 @@ server
 bin/
 pkg/
 src/
+setup.sh
 
