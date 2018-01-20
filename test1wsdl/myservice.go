@@ -1,4 +1,4 @@
-package myservice
+package main
 
 import (
 	"bytes"
