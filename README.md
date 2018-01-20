@@ -63,6 +63,3 @@ with ```wsdl2go``` test.wsdl does not work only test1.wsdl
 With gowsdl both wsdl on the repo compile correctly and go code is generated in 
 both cases
 
-# TODO
- * timers for queries to DB, this should be the next step before SOAP.
- * change this to do for the issues in GITLAB
