@@ -4,7 +4,7 @@ import "fmt"
 
 func main() {
 	service := NewHello_PortType("http://schemas.xmlsoap.org/soap/envelope/", false, nil)
-	amIthere, err := service.SayHello(&areYouThere{})
+	amIthere, err := service.SayHello(&Hello_PortType{})
 	if err != nil {
 		panic(err)
 	}
