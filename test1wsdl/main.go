@@ -3,13 +3,14 @@ package main
 import "fmt"
 
 func main() {
-	service := NewHello_PortType("http://schemas.xmlsoap.org/soap/envelope/", false)
+	service := NewHello_PortType("http://schemas.xmlsoap.org/soap/envelope/", false, 0)
 	amIthere, err := service.SayHello(&areYouThere{})
 	if err != nil {
 		panic(err)
 	}
 
-	fmt.Printf("Alive?: %t\n", amIthere.Return_)
+	fmt.Printf("")
+	//fmt.Printf("Alive?: %t\n", amIthere.Return_)
 
 	/*stations, err := service.GetStations(&getStations{})
 	if err != nil {
