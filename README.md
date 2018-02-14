@@ -42,6 +42,9 @@ docker build --no-cache -t registry:5000/goexperiment_db -f ./docker/db/Dockerfi
 ```
 docker push registry:5000/goexperiment_db:latest
 ```
+```
+docker run -it --name GOEXPERIMENT_DB -p 3306:3306 -e MYSQL_ROOT_PASSWORD=pass -d registry:5000/goexperiment_db:latest
+```
 
 ## Example command for request http to service:
 ```
