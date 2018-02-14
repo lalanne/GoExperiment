@@ -36,6 +36,13 @@ inside the container
 mysql -u root -ppass
 ```
 
+```
+docker build --no-cache -t registry:5000/goexperiment_db -f ./docker/db/Dockerfile .
+```
+```
+docker push registry:5000/goexperiment_db:latest
+```
+
 ## Example command for request http to service:
 ```
 curl "http://127.0.0.1:8000/purchase?a=5&b=9"
