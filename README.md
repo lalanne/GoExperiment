@@ -48,6 +48,9 @@ docker run -it --name GOEXPERIMENT_DB -p 3306:3306 -e MYSQL_ROOT_PASSWORD=pass -
 ```
 docker exec -it GOEXPERIMENT_DB bash
 ```
+```
+mysql -u root -ppass
+```
 
 ## Example command for request http to service:
 ```
