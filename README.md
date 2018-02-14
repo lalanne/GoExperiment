@@ -45,6 +45,9 @@ docker push registry:5000/goexperiment_db:latest
 ```
 docker run -it --name GOEXPERIMENT_DB -p 3306:3306 -e MYSQL_ROOT_PASSWORD=pass -d registry:5000/goexperiment_db:latest
 ```
+```
+docker exec -it GOEXPERIMENT_DB bash
+```
 
 ## Example command for request http to service:
 ```
