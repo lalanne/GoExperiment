@@ -45,6 +45,7 @@ func purchaseHandler(w http.ResponseWriter, r *http.Request) {
 	defer db.Close()
 
 	/*Prepare statement for reading data*/
+	/*timers via contexts, go routines and channels should be put here*/
 	rows, err := db.Query("select * from OperationsAllowed")
 	checkErr(err)
 	defer rows.Close()
