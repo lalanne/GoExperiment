@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
@@ -9,6 +10,7 @@ import (
 	"net/http"
 	"os"
 	"regexp"
+	"time"
 )
 
 func checkErr(err error) {
@@ -41,11 +43,15 @@ func purchaseHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("[Purchase Handler] [%s] [%s] [%s]\n", r.RemoteAddr, r.Method, r.URL)
 
 	/*TODO:study support for context*/
-	db, err := sql.Open("mysql", "root:pass@tcp(0.0.0.0:3306)/GOTEST?readTimeout=0.05ms")
+	//db, err := sql.Open("mysql", "root:pass@tcp(0.0.0.0:3306)/GOTEST?readTimeout=0.05ms")
+	db, err := sql.Open("mysql", "root:pass@tcp(0.0.0.0:3306)/GOTEST")
 	checkErr(err)
 	defer db.Close()
 
-	rows, err := db.Query("select * from OperationsAllowed")
+	ctx, cancel := context.WithTimeout(context.TODO(), time.Nanosecond*1)
+	defer cancel()
+
+	rows, err := db.QueryContext(ctx, "select * from OperationsAllowed")
 	checkErr(err)
 	defer rows.Close()
 
