@@ -20,6 +20,13 @@ go get -u github.com/gorilla/mux
 ```
 ## Database
 
+* Timer to query the database for reading queries, is configured for db Connection, NOT
+by query.
+
+```
+readTimeout
+```
+
 It is necessary to use a database, the easiest way is to use a docker container:
 
 ```
