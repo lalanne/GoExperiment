@@ -11,9 +11,9 @@ with the standard http handler API)
 
 For the service to run some packages are needed:
  * go mysql driver:
- ```
- go get -u github.com/go-sql-driver/mysql
- ```
+```
+go get -u github.com/go-sql-driver/mysql
+```
   * http multiplexer:
 ```
 go get -u github.com/gorilla/mux
