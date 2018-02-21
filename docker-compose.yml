@@ -1,0 +1,16 @@
+version: '3'
+services:
+    ws:
+        image: "clalanne/goexperiment"
+        port:
+            - "8000:8000"
+        stdin_open: true
+        tty: true
+
+    db:
+        image: "clalanne/goexperiment_db"
+        expose:
+            - "3306"
+        stdin_open: true
+        tty: true
+
