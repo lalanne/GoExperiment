@@ -6,10 +6,10 @@ COPY server.go .
 
 RUN go get -d -v github.com/go-sql-driver/mysql
 RUN go get -d -v github.com/gorilla/mux
+RUN go build server.go
+
+ENTRYPOINT ./server
 
 EXPOSE 8000
-
-CMD go run server.go
-
 
 
