@@ -2,7 +2,7 @@ version: '3'
 services:
     ws:
         image: "clalanne/goexperiment"
-        port:
+        ports:
             - "8000:8000"
         stdin_open: true
         tty: true
