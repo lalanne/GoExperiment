@@ -45,7 +45,7 @@ docker push clalanne/goexperiment:latest
 docker run -it --name GOEXPERIMENT_DB -p 3306:3306 -e MYSQL_ROOT_PASSWORD=pass -d clalanne/goexperiment_db:latest
 ```
 ```
-docker run -it --name GOEXPERIMENT -p 8000:8000 -d clalanne/goexperiment:latest
+docker run -it --name GOEXPERIMENT -p 8000:8000 clalanne/goexperiment:latest
 ```
 ```
 docker exec -it GOEXPERIMENT_DB bash
