@@ -33,7 +33,13 @@ It is necessary to use a database, the easiest way is to use a docker container:
 docker build --no-cache -t clalanne/goexperiment_db -f ./docker/db/Dockerfile .
 ```
 ```
+docker build --no-cache -t clalanne/goexperiment -f ./docker/deploy/Dockerfile .
+```
+```
 docker push clalanne/goexperiment_db:latest
+```
+```
+docker push clalanne/goexperiment:latest
 ```
 ```
 docker run -it --name GOEXPERIMENT_DB -p 3306:3306 -e MYSQL_ROOT_PASSWORD=pass -d registry:5000/goexperiment_db:latest
