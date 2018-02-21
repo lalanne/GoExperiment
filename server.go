@@ -42,13 +42,11 @@ func getSoapInfo() {
 func purchaseHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("[Purchase Handler] [%s] [%s] [%s]\n", r.RemoteAddr, r.Method, r.URL)
 
-	/*TODO:study support for context*/
-	//db, err := sql.Open("mysql", "root:pass@tcp(0.0.0.0:3306)/GOTEST?readTimeout=0.05ms")
 	db, err := sql.Open("mysql", "root:pass@tcp(0.0.0.0:3306)/GOTEST")
 	checkErr(err)
 	defer db.Close()
 
-	ctx, cancel := context.WithTimeout(context.TODO(), time.Nanosecond*1)
+	ctx, cancel := context.WithTimeout(context.TODO(), time.Second*1)
 	defer cancel()
 
 	rows, err := db.QueryContext(ctx, "select * from OperationsAllowed")
