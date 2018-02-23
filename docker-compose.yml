@@ -10,7 +10,7 @@ services:
     db:
         image: "clalanne/goexperiment_db"
         environment:
-            - MYSQL_DATABASE=cdr
+            - MYSQL_DATABASE=GOTEST
             - MYSQL_ROOT_PASSWORD=pass
         ports:
             - "3306:3306"
