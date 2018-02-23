@@ -69,7 +69,6 @@ func purchaseHandler(w http.ResponseWriter, r *http.Request) {
 			io.WriteString(w, "purchase operation NOT allowed by DB!")
 		}
 	}
-
 }
 
 func saleHandler(w http.ResponseWriter, r *http.Request) {
