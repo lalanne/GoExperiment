@@ -62,6 +62,10 @@ To start services
 ```
 docker-compose up -d db ws
 ```
+To stop services
+```
+docker-compose down
+```
 ## Example command for request http to service:
 ```
 curl "http://127.0.0.1:8000/purchase?a=5&b=9"
