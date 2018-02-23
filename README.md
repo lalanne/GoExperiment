@@ -60,7 +60,7 @@ mysql -u root -ppass
 ## docker-compose
 To start services
 ```
-docker-compose up -d db ws
+docker-compose up -d
 ```
 To enter to ws container
 ```
