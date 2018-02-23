@@ -42,7 +42,7 @@ func getSoapInfo() {
 func purchaseHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("[Purchase Handler] [%s] [%s] [%s]\n", r.RemoteAddr, r.Method, r.URL)
 
-	db, err := sql.Open("mysql", "root:pass@tcp(0.0.0.0:3306)/GOTEST")
+	db, err := sql.Open("mysql", "root:pass@tcp(db:3306)/GOTEST")
 	checkErr(err)
 	defer db.Close()
 
