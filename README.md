@@ -62,6 +62,10 @@ To start services
 ```
 docker-compose up -d db ws
 ```
+To enter to ws container
+```
+docker exec -it goexperiment_ws_1 bash
+```
 To stop services
 ```
 docker-compose down
