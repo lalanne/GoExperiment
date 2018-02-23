@@ -66,6 +66,10 @@ To enter to ws container
 ```
 docker exec -it goexperiment_ws_1 bash
 ```
+To test ws, from host
+```
+curl "http://0.0.0.0:8000/purchase?a=5&b=9"
+```
 To stop services
 ```
 docker-compose down
