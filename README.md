@@ -1,7 +1,7 @@
 # GoExperiment
 
 The idea is to create a service that connect to a Database and to several external 
-web services via **SOAP** and plaing **HTTP**, exploring concurrency and networking
+web services via **SOAP** and plain **HTTP**, exploring concurrency and networking
 in golang.
 ```
 http.ListenAndServe(":8000", router)
