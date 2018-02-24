@@ -29,32 +29,44 @@ readTimeout
 This is a timer to query the database for just for reading queries, it is configured 
 for db Connection, **NOT** by query.
 
-It is necessary to use a database, the easiest way is to use a docker container:
+Because we wanted to configure timers by query, we used the **context** package, the
+DB package implements the interface ```QueryContext``` which previously it is
+configured by this function ```context.WithTimeout```
 
+## Using docker to start the system
+
+Build the container for the database:
 ```
 docker build --no-cache -t clalanne/goexperiment_db -f ./docker/db/Dockerfile .
 ```
+Build the container for the service:
 ```
 docker build --no-cache -t clalanne/goexperiment -f ./docker/deploy/Dockerfile .
 ```
+Push db container to registry:
 ```
 docker push clalanne/goexperiment_db:latest
 ```
+Push service container to registry:
 ```
 docker push clalanne/goexperiment:latest
 ```
+Run db container:
 ```
 docker run -it --name GOEXPERIMENT_DB -p 3306:3306 -e MYSQL_ROOT_PASSWORD=pass -d clalanne/goexperiment_db:latest
 ```
+Run service container:
 ```
 docker run -it --name GOEXPERIMENT -p 8000:8000 clalanne/goexperiment:latest
 ```
+Enter to the containers
 ```
 docker exec -it GOEXPERIMENT_DB bash
 ```
 ```
 docker exec -it GOEXPERIMENT bash
 ```
+Once inside db container to enter to the already created database:
 ```
 mysql -u root -ppass
 ```
