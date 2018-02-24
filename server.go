@@ -60,11 +60,11 @@ func database(w http.ResponseWriter, c chan int) {
 		err := rows.Scan(&id, &error, &host, &op)
 		checkErr(err)
 
-		log.Printf("[database] operation[%s]\n", op)
+		/*log.Printf("[database] operation[%s]\n", op)
 		if op != "purchase" {
 			c <- 1
 			io.WriteString(w, "purchase operation NOT allowed by DB!")
-		}
+		}*/
 	}
 	c <- 0
 }
@@ -75,6 +75,7 @@ func purchaseHandler(w http.ResponseWriter, r *http.Request) {
 	go database(w, c)
 	x := <-c
 	log.Printf("[Purchase Handler] return from database success? [%d]\n", x)
+	io.WriteString(w, "purchase operation allowed by DB!")
 }
 
 func saleHandler(w http.ResponseWriter, r *http.Request) {
