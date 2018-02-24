@@ -39,9 +39,7 @@ func getSoapInfo() {
 
 }
 
-func purchaseHandler(w http.ResponseWriter, r *http.Request) {
-	log.Printf("[Purchase Handler] [%s] [%s] [%s]\n", r.RemoteAddr, r.Method, r.URL)
-
+func database(c chan int) {
 	// lazily open db (doesn't truly open until first request)
 	db, err := sql.Open("mysql", "root:pass@tcp(db:3306)/GOTEST")
 	checkErr(err)
@@ -62,14 +60,21 @@ func purchaseHandler(w http.ResponseWriter, r *http.Request) {
 		err := rows.Scan(&id, &error, &host, &op)
 		checkErr(err)
 
-		if op == "purchase" {
-			io.WriteString(w, "purchase operation allowed by DB!")
-			getSoapInfo()
-			break
-		} else {
+		if op != "purchase" {
+			c <- -1
 			io.WriteString(w, "purchase operation NOT allowed by DB!")
 		}
 	}
+
+	c <- 0
+}
+
+func purchaseHandler(w http.ResponseWriter, r *http.Request) {
+	log.Printf("[Purchase Handler] [%s] [%s] [%s]\n", r.RemoteAddr, r.Method, r.URL)
+	c := make(chan int)
+	go database(c)
+	x := <-c
+	log.Printf("[Purchase Handler] return from database success? [%d]\n", x)
 }
 
 func saleHandler(w http.ResponseWriter, r *http.Request) {
