@@ -22,13 +22,12 @@ go get -u github.com/go-sql-driver/mysql
 go get -u github.com/gorilla/mux
 ```
 ## Database
-
-* Timer to query the database for reading queries, is configured for db Connection, NOT
-by query.
-
+To implement timers for queries to the data base one way to do it, is using
 ```
 readTimeout
 ```
+This is a timer to query the database for just for reading queries, it is configured 
+for db Connection, **NOT** by query.
 
 It is necessary to use a database, the easiest way is to use a docker container:
 
