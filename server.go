@@ -56,18 +56,11 @@ func database(w http.ResponseWriter, c chan int) {
 	defer rows.Close()
 
 	for rows.Next() {
-		var id string
-		var error int
-		var host int
-		var op string
-		err := rows.Scan(&id, &error, &host, &op)
+		var count int
+		err := rows.Scan(&count)
 		checkErr(err)
 
-		/*log.Printf("[database] operation[%s]\n", op)
-		if op != "purchase" {
-			c <- 1
-			io.WriteString(w, "purchase operation NOT allowed by DB!")
-		}*/
+		log.Printf("[database] count[%d]\n", count)
 	}
 	c <- 0
 }
