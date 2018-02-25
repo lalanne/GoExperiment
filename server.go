@@ -55,14 +55,20 @@ func database(w http.ResponseWriter, c chan int) {
 	checkErr(err)
 	defer rows.Close()
 
+	var count int
+
 	for rows.Next() {
-		var count int
-		err := rows.Scan(&count)
+		err = rows.Scan(&count)
 		checkErr(err)
 
 		log.Printf("[database] count[%d]\n", count)
 	}
-	c <- 0
+
+	if count == 1 {
+		c <- 0
+	} else {
+		c <- 1
+	}
 }
 
 func purchaseHandler(w http.ResponseWriter, r *http.Request) {
