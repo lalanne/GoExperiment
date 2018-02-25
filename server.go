@@ -48,7 +48,10 @@ func database(w http.ResponseWriter, c chan int) {
 	ctx, cancel := context.WithTimeout(context.TODO(), time.Second*1)
 	defer cancel()
 
-	rows, err := db.QueryContext(ctx, "select * from OperationsAllowed")
+	rows, err := db.QueryContext(
+		ctx,
+		"select count(1) from OperationsAllowed where op=\"purchase\";",
+	)
 	checkErr(err)
 	defer rows.Close()
 
