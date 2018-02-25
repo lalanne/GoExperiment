@@ -56,13 +56,11 @@ func database(w http.ResponseWriter, c chan int) {
 	defer rows.Close()
 
 	var count int
+	rows.Next()
+	err = rows.Scan(&count)
+	checkErr(err)
 
-	for rows.Next() {
-		err = rows.Scan(&count)
-		checkErr(err)
-
-		log.Printf("[database] count[%d]\n", count)
-	}
+	log.Printf("[database] count[%d]\n", count)
 
 	if count == 1 {
 		c <- 0
