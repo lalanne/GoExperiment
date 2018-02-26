@@ -104,12 +104,13 @@ func insertCdr(w http.ResponseWriter, c chan int) {
 func purchaseHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("[Purchase Handler] [%s] [%s] [%s]\n", r.RemoteAddr, r.Method, r.URL)
 	c := make(chan int)
+	c1 := make(chan int)
 	go validateOperation(w, c)
 	x := <-c
 	log.Printf("[Purchase Handler] return from validateOperation success? [%d]\n", x)
-	go insertCdr(w, c)
-	x = <-c
-	log.Printf("[Purchase Handler] return from insertCdr success? [%d]\n", x)
+	go insertCdr(w, c1)
+	x1 := <-c1
+	log.Printf("[Purchase Handler] return from insertCdr success? [%d]\n", x1)
 	io.WriteString(w, "purchase operation allowed by DB!")
 }
 
