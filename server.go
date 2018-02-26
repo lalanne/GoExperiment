@@ -39,7 +39,8 @@ func getSoapInfo() {
 
 }
 
-func database(w http.ResponseWriter, c chan int) {
+func validateOperation(w http.ResponseWriter, c chan int) {
+	log.Printf("[validateOperation]\n")
 	// lazily open db (doesn't truly open until first request)
 	db, err := sql.Open("mysql", "root:pass@tcp(db:3306)/GOTEST")
 	checkErr(err)
@@ -60,7 +61,38 @@ func database(w http.ResponseWriter, c chan int) {
 	err = rows.Scan(&count)
 	checkErr(err)
 
-	log.Printf("[database] count[%d]\n", count)
+	log.Printf("[validateOperation] count[%d]\n", count)
+
+	if count == 1 {
+		c <- 0
+	} else {
+		c <- 1
+	}
+}
+
+func insertCdr(w http.ResponseWriter, c chan int) {
+	log.Printf("[insertCdr]\n")
+	// lazily open db (doesn't truly open until first request)
+	db, err := sql.Open("mysql", "root:pass@tcp(db:3306)/CDR")
+	checkErr(err)
+	defer db.Close()
+
+	ctx, cancel := context.WithTimeout(context.TODO(), time.Second*1)
+	defer cancel()
+
+	rows, err := db.QueryContext(
+		ctx,
+		"insert into cdr (id, error, host, op) values (\"1\", 0, 0, \"purchase\");",
+	)
+	checkErr(err)
+	defer rows.Close()
+
+	var count int
+	rows.Next()
+	err = rows.Scan(&count)
+	checkErr(err)
+
+	log.Printf("[insertCdr] count[%d]\n", count)
 
 	if count == 1 {
 		c <- 0
@@ -72,9 +104,12 @@ func database(w http.ResponseWriter, c chan int) {
 func purchaseHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("[Purchase Handler] [%s] [%s] [%s]\n", r.RemoteAddr, r.Method, r.URL)
 	c := make(chan int)
-	go database(w, c)
+	go validateOperation(w, c)
 	x := <-c
-	log.Printf("[Purchase Handler] return from database success? [%d]\n", x)
+	log.Printf("[Purchase Handler] return from validateOperation success? [%d]\n", x)
+	go insertCdr(w, c)
+	x = <-c
+	log.Printf("[Purchase Handler] return from insertCdr success? [%d]\n", x)
 	io.WriteString(w, "purchase operation allowed by DB!")
 }
 
