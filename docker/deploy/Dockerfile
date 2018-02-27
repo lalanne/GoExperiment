@@ -8,7 +8,7 @@ RUN go get -d -v github.com/go-sql-driver/mysql
 RUN go get -d -v github.com/gorilla/mux
 RUN go build server.go
 
-ENTRYPOINT ./server
+ENTRYPOINT ./server && tail -f server_debug.log
 
 EXPOSE 8000
 
