@@ -80,25 +80,21 @@ func insertCdr(w http.ResponseWriter, c chan int) {
 	ctx, cancel := context.WithTimeout(context.TODO(), time.Second*1)
 	defer cancel()
 
-	rows, err := db.QueryContext(
+	/*stmt, err := db.PrepareContext(
 		ctx,
 		"insert into cdr (id, error, host, op) values (\"1\", 0, 0, \"purchase\");",
 	)
 	checkErr(err)
-	defer rows.Close()
-
-	var count int
-	rows.Next()
-	err = rows.Scan(&count)
+	defer stmt.Close()*/
+	res, err := db.ExecContext(
+		ctx,
+		"insert into cdr (id, error, host, op) values (\"1\", 0, 0, \"purchase\");",
+	)
 	checkErr(err)
 
-	log.Printf("[insertCdr] count[%d]\n", count)
+	log.Printf("[insertCdr] res[%d]\n", res)
 
-	if count == 1 {
-		c <- 0
-	} else {
-		c <- 1
-	}
+	c <- 0
 }
 
 func purchaseHandler(w http.ResponseWriter, r *http.Request) {
