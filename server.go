@@ -80,12 +80,6 @@ func insertCdr(w http.ResponseWriter, c chan int) {
 	ctx, cancel := context.WithTimeout(context.TODO(), time.Second*1)
 	defer cancel()
 
-	/*stmt, err := db.PrepareContext(
-		ctx,
-		"insert into cdr (id, error, host, op) values (\"1\", 0, 0, \"purchase\");",
-	)
-	checkErr(err)
-	defer stmt.Close()*/
 	res, err := db.ExecContext(
 		ctx,
 		"insert into cdr (id, error, host, op) values (\"1\", 0, 0, \"purchase\");",
