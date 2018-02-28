@@ -8,6 +8,12 @@ import (
 	"os"
 )
 
+func checkErr(err error) {
+	if err != nil {
+		panic(err.Error())
+	}
+}
+
 func openLogFile(logfile string) {
 	if logfile != "" {
 		lf, err := os.OpenFile(logfile, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0640)
