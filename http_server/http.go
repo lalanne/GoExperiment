@@ -1,4 +1,4 @@
-package main
+package http_server
 
 import (
 	"github.com/gorilla/mux"
@@ -6,8 +6,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"regexp"
-	"time"
 )
 
 func openLogFile(logfile string) {
