@@ -41,7 +41,11 @@ docker build --no-cache -t clalanne/goexperiment_db -f ./docker/db/Dockerfile .
 ```
 Build the container for the service:
 ```
-docker build --no-cache -t clalanne/goexperiment -f ./docker/deploy/Dockerfile .
+docker build --no-cache -t clalanne/goexperiment -f ./docker/web_service/Dockerfile .
+```
+Build the container for http server:
+```
+docker build --no-cache -t clalanne/goexperiment_http -f ./docker/http_server/Dockerfile .
 ```
 Push db container to registry:
 ```
@@ -51,6 +55,10 @@ Push service container to registry:
 ```
 docker push clalanne/goexperiment:latest
 ```
+Push http server container to registry:
+```
+docker push clalanne/goexperiment_http:latest
+```
 Run db container:
 ```
 docker run -it --name GOEXPERIMENT_DB -p 3306:3306 -e MYSQL_ROOT_PASSWORD=pass -d clalanne/goexperiment_db:latest
@@ -59,12 +67,19 @@ Run service container:
 ```
 docker run -it --name GOEXPERIMENT -p 8000:8000 clalanne/goexperiment:latest
 ```
+Run http server container:
+```
+docker run -it --name GOEXPERIMENT_HTTP -p 8080:8080 clalanne/goexperiment_http:latest
+```
 Enter to the containers
 ```
 docker exec -it GOEXPERIMENT_DB bash
 ```
 ```
 docker exec -it GOEXPERIMENT bash
+```
+```
+docker exec -it GOEXPERIMENT_HTTP bash
 ```
 Once inside db container to enter to the already created database:
 ```
