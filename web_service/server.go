@@ -6,6 +6,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
 	"io"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -91,14 +92,32 @@ func insertCdr(w http.ResponseWriter, c chan int) {
 	c <- 0
 }
 
+func getHttpResponse(w http.ResponseWriter, c chan int) {
+	log.Printf("[getHttpResponse]\n")
+
+	resp, err := http.Get("http://http:8080/")
+	checkErr(err)
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	bodyString := string(body)
+	log.Printf("[getHttpResponse][%s]\n", bodyString)
+
+	c <- 0
+}
+
 func purchaseHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("[Purchase Handler] [%s] [%s] [%s]\n", r.RemoteAddr, r.Method, r.URL)
 	c := make(chan int)
+	c0 := make(chan int)
 	c1 := make(chan int)
 
 	go validateOperation(w, c)
 	x := <-c
 	log.Printf("[Purchase Handler] return from validateOperation success? [%d]\n", x)
+
+	go getHttpResponse(w, c0)
+	x0 := <-c0
+	log.Printf("[Purchase Handler] return from getHttpResponse success? [%d]\n", x0)
 
 	go insertCdr(w, c1)
 	x1 := <-c1
