@@ -7,6 +7,13 @@ services:
         stdin_open: true
         tty: true
 
+    http:
+        image: "clalanne/goexperiment_http"
+        ports:
+            - "8080:8080"
+        stdin_open: true
+        tty: true
+
     db:
         image: "clalanne/goexperiment_db"
         environment:
