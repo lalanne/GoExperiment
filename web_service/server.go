@@ -123,7 +123,7 @@ func purchaseHandler(w http.ResponseWriter, r *http.Request) {
 	x1 := <-c1
 	log.Printf("[Purchase Handler] return from insertCdr success? [%d]\n", x1)
 
-	io.WriteString(w, "purchase operation allowed by DB!")
+	io.WriteString(w, "Web service answer, everything OK with happy path!!!")
 }
 
 func saleHandler(w http.ResponseWriter, r *http.Request) {
