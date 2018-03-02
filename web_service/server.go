@@ -95,9 +95,13 @@ func insertCdr(w http.ResponseWriter, c chan int) {
 func getHttpResponse(w http.ResponseWriter, c chan int) {
 	log.Printf("[getHttpResponse]\n")
 
-	resp, err := http.Get("http://http:8080/")
+	var httpClient = &http.Client{
+		Timeout: time.Second * 1,
+	}
+	resp, err := httpClient.Get("http://http:8080/")
 	checkErr(err)
 	defer resp.Body.Close()
+
 	body, err := ioutil.ReadAll(resp.Body)
 	bodyString := string(body)
 	log.Printf("[getHttpResponse][%s]\n", bodyString)
