@@ -130,3 +130,8 @@ with ```wsdl2go``` test.wsdl does not work only test1.wsdl
 With gowsdl both wsdl on the repo compile correctly and go code is generated in 
 both cases
 
+## Load
+```
+ab -n 1000 -c 100 http://0.0.0.0:8000/purchase\?a\=5\&b\=9
+```
+
