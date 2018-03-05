@@ -92,7 +92,7 @@ func insertCdr(w http.ResponseWriter, c chan int) {
 	c <- 0
 }
 
-func getHttpResponse(w http.ResponseWriter, c chan int) {
+func getHTTPResponse(w http.ResponseWriter, c chan int) {
 	log.Printf("[getHttpResponse]\n")
 
 	var httpClient = &http.Client{
