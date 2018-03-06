@@ -27,12 +27,6 @@ func openLogFile(logfile string) {
 	}
 }
 
-func genericHandler(w http.ResponseWriter, r *http.Request) {
-	log.Printf("[Generic Handler] [%s] [%s] [%s]\n", r.RemoteAddr, r.Method, r.URL)
-
-	io.WriteString(w, "default operation!")
-}
-
 func getSoapInfo() {
 	log.Printf("[getSoapInfo] \n")
 
@@ -107,7 +101,7 @@ func getHTTPResponse(w http.ResponseWriter, c chan int) {
 	c <- 0
 }
 
-func purchaseHandler(w http.ResponseWriter, r *http.Request) {
+func PurchaseHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("[Purchase Handler] [%s] [%s] [%s]\n", r.RemoteAddr, r.Method, r.URL)
 	c := make(chan int)
 	c0 := make(chan int)
@@ -128,7 +122,7 @@ func purchaseHandler(w http.ResponseWriter, r *http.Request) {
 	io.WriteString(w, "Web service answer, everything OK with happy path!!!")
 }
 
-func saleHandler(w http.ResponseWriter, r *http.Request) {
+func SaleHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("[Sale Handler] [%s] [%s] [%s]\n", r.RemoteAddr, r.Method, r.URL)
 
 	s, err := regexp.Compile(`\?(.*)`)
@@ -138,4 +132,10 @@ func saleHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("<%v>\n", res)
 
 	io.WriteString(w, "sale operation!")
+}
+
+func GenericHandler(w http.ResponseWriter, r *http.Request) {
+	log.Printf("[Generic Handler] [%s] [%s] [%s]\n", r.RemoteAddr, r.Method, r.URL)
+
+	io.WriteString(w, "default operation!")
 }
