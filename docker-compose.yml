@@ -14,9 +14,6 @@ services:
         stdin_open: true
         tty: true
 
-    tests:
-        image: "clalanne/goexperiment_tests"
-
     db:
         image: "clalanne/goexperiment_db"
         environment:
