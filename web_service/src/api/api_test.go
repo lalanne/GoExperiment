@@ -18,5 +18,4 @@ func TestBasic(t *testing.T) {
 	if resp.StatusCode != 200 {
 		t.Fatalf("Received non-200 response: %d\n", resp.StatusCode)
 	}
-
 }
