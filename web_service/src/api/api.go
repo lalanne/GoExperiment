@@ -1,4 +1,4 @@
-package handlers
+package api
 
 import (
 	"context"
@@ -7,6 +7,7 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
+	"net/http"
 	"os"
 	"regexp"
 	"time"
@@ -18,7 +19,7 @@ func checkErr(err error) {
 	}
 }
 
-func openLogFile(logfile string) {
+func OpenLogFile(logfile string) {
 	if logfile != "" {
 		lf, err := os.OpenFile(logfile, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0640)
 		checkErr(err)
@@ -85,7 +86,7 @@ func insertCdr(w http.ResponseWriter, c chan int) {
 }
 
 func getHTTPResponse(w http.ResponseWriter, c chan int) {
-	log.Printf("[getHttpResponse]\n")
+	log.Printf("[getHTTPResponse]\n")
 
 	var httpClient = &http.Client{
 		Timeout: time.Second * 1,
@@ -96,7 +97,7 @@ func getHTTPResponse(w http.ResponseWriter, c chan int) {
 
 	body, err := ioutil.ReadAll(resp.Body)
 	bodyString := string(body)
-	log.Printf("[getHttpResponse][%s]\n", bodyString)
+	log.Printf("[getHTTPResponse][%s]\n", bodyString)
 
 	c <- 0
 }
@@ -111,9 +112,9 @@ func PurchaseHandler(w http.ResponseWriter, r *http.Request) {
 	x := <-c
 	log.Printf("[Purchase Handler] return from validateOperation success? [%d]\n", x)
 
-	go getHttpResponse(w, c0)
+	go getHTTPResponse(w, c0)
 	x0 := <-c0
-	log.Printf("[Purchase Handler] return from getHttpResponse success? [%d]\n", x0)
+	log.Printf("[Purchase Handler] return from getHTTPResponse success? [%d]\n", x0)
 
 	go insertCdr(w, c1)
 	x1 := <-c1
