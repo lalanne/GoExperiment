@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/gorilla/mux"
 	"io"
 	"io/ioutil"
 	"log"
@@ -102,7 +103,7 @@ func getHTTPResponse(w http.ResponseWriter, c chan int) {
 	c <- 0
 }
 
-func PurchaseHandler(w http.ResponseWriter, r *http.Request) {
+func purchaseHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("[Purchase Handler] [%s] [%s] [%s]\n", r.RemoteAddr, r.Method, r.URL)
 	c := make(chan int)
 	c0 := make(chan int)
@@ -123,7 +124,7 @@ func PurchaseHandler(w http.ResponseWriter, r *http.Request) {
 	io.WriteString(w, "Web service answer, everything OK with happy path!!!")
 }
 
-func SaleHandler(w http.ResponseWriter, r *http.Request) {
+func saleHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("[Sale Handler] [%s] [%s] [%s]\n", r.RemoteAddr, r.Method, r.URL)
 
 	s, err := regexp.Compile(`\?(.*)`)
@@ -135,8 +136,17 @@ func SaleHandler(w http.ResponseWriter, r *http.Request) {
 	io.WriteString(w, "sale operation!")
 }
 
-func GenericHandler(w http.ResponseWriter, r *http.Request) {
+func genericHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("[Generic Handler] [%s] [%s] [%s]\n", r.RemoteAddr, r.Method, r.URL)
 
 	io.WriteString(w, "default operation!")
+}
+
+func Handlers() *mux.Router {
+	r := mux.NewRouter()
+	r.HandleFunc("/", genericHandler).Methods("GET")
+	r.HandleFunc("/purchase", purchaseHandler).Methods("GET")
+	r.HandleFunc("/sale", saleHandler).Methods("GET")
+
+	return r
 }
