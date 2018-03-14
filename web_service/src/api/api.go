@@ -63,12 +63,10 @@ func validateOperation(w http.ResponseWriter,
 	}
 }
 
-func insertCdr(w http.ResponseWriter, c chan int) {
+func insertCdr(w http.ResponseWriter,
+	c chan int,
+	db *sql.DB) {
 	log.Printf("[insertCdr]\n")
-	// lazily open db (doesn't truly open until first request)
-	db, err := sql.Open("mysql", "root:pass@tcp(db:3306)/CDR")
-	checkErr(err)
-	defer db.Close()
 
 	ctx, cancel := context.WithTimeout(context.TODO(), time.Second*1)
 	defer cancel()
@@ -103,15 +101,17 @@ func getHTTPResponse(w http.ResponseWriter, c chan int) {
 
 func purchaseHandler(w http.ResponseWriter,
 	r *http.Request,
-	db *sql.DB) {
+	dbLogic *sql.DB,
+	dbStats *sql.DB) {
 	log.Printf("[Purchase Handler] [%s] [%s] [%s]\n", r.RemoteAddr, r.Method, r.URL)
+
 	c := make(chan int)
 	c0 := make(chan int)
 	c1 := make(chan int)
 
 	go validateOperation(w,
 		c,
-		db)
+		dbLogic)
 	x := <-c
 	log.Printf("[Purchase Handler] return from validateOperation success? [%d]\n", x)
 
@@ -119,7 +119,9 @@ func purchaseHandler(w http.ResponseWriter,
 	x0 := <-c0
 	log.Printf("[Purchase Handler] return from getHTTPResponse success? [%d]\n", x0)
 
-	go insertCdr(w, c1)
+	go insertCdr(w,
+		c1,
+		dbStats)
 	x1 := <-c1
 	log.Printf("[Purchase Handler] return from insertCdr success? [%d]\n", x1)
 
@@ -146,7 +148,12 @@ func genericHandler(w http.ResponseWriter, r *http.Request) {
 
 func Handlers() *mux.Router {
 	// lazily open db (doesn't truly open until first request)
-	db, err := sql.Open("mysql", "root:pass@tcp(db:3306)/GOTEST")
+	dbLogic, err := sql.Open("mysql", "root:pass@tcp(db:3306)/GOTEST")
+	checkErr(err)
+	//defer db.Close()
+
+	// lazily open db (doesn't truly open until first request)
+	dbStats, err := sql.Open("mysql", "root:pass@tcp(db:3306)/CDR")
 	checkErr(err)
 	//defer db.Close()
 
@@ -154,7 +161,10 @@ func Handlers() *mux.Router {
 	r.HandleFunc("/", genericHandler).Methods("GET")
 
 	r.HandleFunc("/purchase", func(w http.ResponseWriter, r *http.Request) {
-		purchaseHandler(w, r, db)
+		purchaseHandler(w,
+			r,
+			dbLogic,
+			dbStats)
 	}).Methods("GET")
 
 	r.HandleFunc("/sale", saleHandler).Methods("GET")
