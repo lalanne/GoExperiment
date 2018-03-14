@@ -25,11 +25,13 @@ func main() {
 	dbLogic, err := sql.Open("mysql", "root:pass@tcp(db:3306)/GOTEST")
 	checkErr(err)
 	defer dbLogic.Close()
+	dbLogic.SetMaxOpenConns(10) // not unlimited number of connections
 
 	// lazily open db (doesn't truly open until first request)
 	dbStats, err := sql.Open("mysql", "root:pass@tcp(db:3306)/CDR")
 	checkErr(err)
 	defer dbStats.Close()
+	dbStats.SetMaxOpenConns(10) // not unlimited number of connections
 
 	log.Fatal(http.ListenAndServe(":8000", api.Handlers(dbLogic, dbStats)))
 }
