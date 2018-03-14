@@ -34,12 +34,10 @@ func getSoapInfo() {
 
 }
 
-func validateOperation(w http.ResponseWriter, c chan int) {
+func validateOperation(w http.ResponseWriter,
+	c chan int,
+	db *sql.DB) {
 	log.Printf("[validateOperation]\n")
-	// lazily open db (doesn't truly open until first request)
-	db, err := sql.Open("mysql", "root:pass@tcp(db:3306)/GOTEST")
-	checkErr(err)
-	defer db.Close()
 
 	ctx, cancel := context.WithTimeout(context.TODO(), time.Second*1)
 	defer cancel()
@@ -103,13 +101,17 @@ func getHTTPResponse(w http.ResponseWriter, c chan int) {
 	c <- 0
 }
 
-func purchaseHandler(w http.ResponseWriter, r *http.Request) {
+func purchaseHandler(w http.ResponseWriter,
+	r *http.Request,
+	db *sql.DB) {
 	log.Printf("[Purchase Handler] [%s] [%s] [%s]\n", r.RemoteAddr, r.Method, r.URL)
 	c := make(chan int)
 	c0 := make(chan int)
 	c1 := make(chan int)
 
-	go validateOperation(w, c)
+	go validateOperation(w,
+		c,
+		db)
 	x := <-c
 	log.Printf("[Purchase Handler] return from validateOperation success? [%d]\n", x)
 
@@ -143,9 +145,18 @@ func genericHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func Handlers() *mux.Router {
+	// lazily open db (doesn't truly open until first request)
+	db, err := sql.Open("mysql", "root:pass@tcp(db:3306)/GOTEST")
+	checkErr(err)
+	//defer db.Close()
+
 	r := mux.NewRouter()
 	r.HandleFunc("/", genericHandler).Methods("GET")
-	r.HandleFunc("/purchase", purchaseHandler).Methods("GET")
+
+	r.HandleFunc("/purchase", func(w http.ResponseWriter, r *http.Request) {
+		purchaseHandler(w, r, db)
+	}).Methods("GET")
+
 	r.HandleFunc("/sale", saleHandler).Methods("GET")
 
 	return r
