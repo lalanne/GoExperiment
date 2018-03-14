@@ -35,7 +35,8 @@ configured by this function ```context.WithTimeout```
 
  * There is one ```sql.DB``` object created by DB that I want to connect to, this
  objects are meant to be long lived and they are closed when the program is done.
- Each of these objects handle their own connection pool.
+ Each of these objects handle their own connection pool(SetMaxOpenConns).
+
 
 ## Using docker to start the system
 
