@@ -146,17 +146,7 @@ func genericHandler(w http.ResponseWriter, r *http.Request) {
 	io.WriteString(w, "default operation!")
 }
 
-func Handlers() *mux.Router {
-	// lazily open db (doesn't truly open until first request)
-	dbLogic, err := sql.Open("mysql", "root:pass@tcp(db:3306)/GOTEST")
-	checkErr(err)
-	//defer db.Close()
-
-	// lazily open db (doesn't truly open until first request)
-	dbStats, err := sql.Open("mysql", "root:pass@tcp(db:3306)/CDR")
-	checkErr(err)
-	//defer db.Close()
-
+func Handlers(dbLogic *sql.DB, dbStats *sql.DB) *mux.Router {
 	r := mux.NewRouter()
 	r.HandleFunc("/", genericHandler).Methods("GET")
 
