@@ -33,6 +33,10 @@ Because we wanted to configure timers by query, we used the **context** package,
 DB package implements the interface ```QueryContext``` which previously it is
 configured by this function ```context.WithTimeout```
 
+ * There is one ```sql.DB``` object created by DB that I want to connect to, this
+ objects are meant to be long lived and they are closed when the program is done.
+ Each of these objects handle their own connection pool.
+
 ## Using docker to start the system
 
 Build the container for the database:
