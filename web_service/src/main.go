@@ -38,7 +38,7 @@ func main() {
 
 	// Initialize tracer with a logger and a metrics factory
 	closer, err := cfg.InitGlobalTracer(
-		"serviceName",
+		"orquestador",
 		jaegercfg.Logger(jLogger),
 	//	jaegercfg.Metrics(jMetricsFactory),
 	)
