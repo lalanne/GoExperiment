@@ -4,6 +4,7 @@ import (
 	"api"
 	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/uber/jaeger-client-go"
 	"log"
 	"net/http"
 )
