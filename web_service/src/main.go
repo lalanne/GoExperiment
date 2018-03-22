@@ -4,7 +4,7 @@ import (
 	"api"
 	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
-	//"github.com/opentracing/opentracing-go"
+	"github.com/opentracing/opentracing-go"
 	"github.com/uber/jaeger-client-go"
 	jaegercfg "github.com/uber/jaeger-client-go/config"
 	jaegerlog "github.com/uber/jaeger-client-go/log"
