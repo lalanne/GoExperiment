@@ -14,7 +14,7 @@ import (
 )
 
 // Init returns an instance of Jaeger Tracer that samples 100% of traces and logs all spans to stdout.
-func Init(service string) (opentracing.Tracer, io.Closer) {
+func tracer_init(service string) (opentracing.Tracer, io.Closer) {
 	cfg := &config.Configuration{
 		Sampler: &config.SamplerConfig{
 			Type:  "const",
@@ -41,6 +41,8 @@ func main() {
 	logFile := "server_debug.log"
 	api.OpenLogFile(logFile)
 	log.SetFlags(log.Ldate | log.Ltime | log.Lshortfile)
+
+	tracer, closer := tracer_init("hello-world")
 
 	log.Println("Web service for testing GO")
 
