@@ -1,10 +1,10 @@
 package main
 
 import (
-	"api"
 	"database/sql"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/lalanne/GoExperiment/web_service/src/api"
 	opentracing "github.com/opentracing/opentracing-go"
 	jaeger "github.com/uber/jaeger-client-go"
 	config "github.com/uber/jaeger-client-go/config"
