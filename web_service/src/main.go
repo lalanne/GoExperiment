@@ -45,8 +45,8 @@ func main() {
 	tracer, closer := tracer_init("hello-world")
 	defer closer.Close()
 
-	span := tracer.StartSpan("request")
-	span.SetTag("hello-to", "loco")
+	span := tracer.StartSpan("main_service")
+	span.SetTag("jaeger-debug-id", "4567")
 
 	log.Println("Web service for testing GO")
 
