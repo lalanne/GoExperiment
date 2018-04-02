@@ -43,6 +43,10 @@ func main() {
 	log.SetFlags(log.Ldate | log.Ltime | log.Lshortfile)
 
 	tracer, closer := tracer_init("hello-world")
+	defer closer.Close()
+
+	span := tracer.StartSpan("request")
+	span.SetTag("hello-to", "loco")
 
 	log.Println("Web service for testing GO")
 
